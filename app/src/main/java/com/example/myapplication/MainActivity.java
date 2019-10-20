@@ -7,28 +7,74 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+import android.view.View;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
 
+    private FloatingActionButton fab, fab_main_verificar_directo;
+    private Context context;
+    private SharedPreferences preferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
+        init();
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                guardarPreferencias();
             }
         });
+
+        fab_main_verificar_directo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                irVerificar();
+            }
+        });
+    }
+
+    private void init(){
+        fab = findViewById(R.id.fab_main_verificar);
+        fab_main_verificar_directo = findViewById(R.id.fab_main_verificar_directo);
+        context = this;
+        preferences = context.getSharedPreferences(getString(R.string.sharedPN), Context.MODE_PRIVATE);
+    }
+
+    private void irVerificar(){
+        Intent verificar = new Intent(this, VerificarActivity.class);
+        startActivity(verificar);
+    }
+
+    private void guardarPreferencias(){
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("nombre_usuario", "Carlos Jaramillo");
+        editor.putString("rol_usuario", "admin");
+        editor.putString("id_usuario", "TYF6767HJG879");
+        editor.commit();
+
+        irVerificar();
     }
 
     @Override
