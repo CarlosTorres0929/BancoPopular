@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="20dp"
+    >
+
+    <TextView
+        android:id="@+id/ncuenta"
+        android:layout_width="match_parent"
+        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content"
+        android:text="Cuenta"
+        android:textSize="17sp"/>
+
+    <TextView
+        android:id="@+id/tpCuenta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Tipo De Cuenta"
+        android:textSize="17sp"/>
+
+    <TextView
+        android:id="@+id/usaldo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cuenta"
+        android:layout_marginTop="20dp"
+        android:textSize="17sp"/>
+
+    <view
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#222222"
+        android:layout_marginTop="20dp"/>
+
+
+
+</LinearLayout>

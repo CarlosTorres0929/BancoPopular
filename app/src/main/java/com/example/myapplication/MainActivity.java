@@ -1,101 +1,61 @@
 package com.example.myapplication;
 
-import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import android.view.View;
+import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
-import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 
 public class MainActivity extends AppCompatActivity {
 
-    private FloatingActionButton fab, fab_main_verificar_directo;
-    private Context context;
-    private SharedPreferences preferences;
-
+    private FloatingActionButton fab_main_iniciar,fab_main_register;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar_main);
-        setSupportActionBar(toolbar);
 
-        init();
+        final EditText etName = (EditText) findViewById(R.id.etName);
+        final EditText etPassword = (EditText) findViewById(R.id.etPassword);
+        fab_main_iniciar = findViewById(R.id.fab_main_iniciar);
+        fab_main_register = findViewById(R.id.fab_main_register);
 
-        fab.setOnClickListener(new View.OnClickListener() {
+        fab_main_iniciar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                guardarPreferencias();
+            public void onClick(View v) {
+
+                String user = etName.getText().toString();
+                String password = etPassword.getText().toString();
+                SharedPreferences preferences = getSharedPreferences("MYPREFS", MODE_PRIVATE);
+
+                //String savedPassword = preferences.getString(password, "");
+                //String savedUserName = preferences.getString(user, "");
+
+                String userDetails = preferences.getString(user + password + "data","LA INFORMACION QUE INGRESASTE ESTA INCORRECTA.. !REGISTRATE!.");
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("display",userDetails);
+                editor.commit();
+
+                    Intent displayScreen = new Intent(MainActivity.this, DisplayScreen.class);
+                    startActivity(displayScreen);
+
             }
         });
 
-        fab_main_verificar_directo.setOnClickListener(new View.OnClickListener() {
+
+        fab_main_register.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                irVerificar();
+            public void onClick(View v) {
+                Intent registerScreen = new Intent(MainActivity.this, Register.class);
+                startActivity(registerScreen);
             }
         });
     }
 
-    private void init(){
-        fab = findViewById(R.id.fab_main_verificar);
-        fab_main_verificar_directo = findViewById(R.id.fab_main_verificar_directo);
-        context = this;
-        preferences = context.getSharedPreferences(getString(R.string.sharedPN), Context.MODE_PRIVATE);
-    }
 
-    private void irVerificar(){
-        Intent verificar = new Intent(this, VerificarActivity.class);
-        startActivity(verificar);
-    }
 
-    private void guardarPreferencias(){
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("nombre_usuario", "Carlos Jaramillo");
-        editor.putString("rol_usuario", "admin");
-        editor.putString("id_usuario", "TYF6767HJG879");
-        editor.commit();
-
-        irVerificar();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }
