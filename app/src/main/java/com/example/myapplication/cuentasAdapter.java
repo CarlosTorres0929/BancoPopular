@@ -1,8 +1,10 @@
 package com.example.myapplication;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,41 +13,57 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
-public abstract class cuentasAdapter extends FirestoreRecyclerAdapter {
+import java.util.ArrayList;
+
+public class cuentasAdapter extends BaseAdapter {
 
 
-    public cuentasAdapter(@NonNull FirestoreRecyclerOptions<cuenta> options){
-        super(options);
+    private final Context context;
+    private cuenta model;
+    private ArrayList<cuenta> list;
+
+
+    public cuentasAdapter(Context context, ArrayList<cuenta> list) {
+        this.context = context;
+        this.list = list;
     }
 
-
-
-    protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull cuenta cuenta) {
-               holder.nCuenta.setText(String.valueOf(cuenta.getnCuenta()));
-               holder.tpCuenta.setText(cuenta.getTpCuenta());
-               holder.usaldo.setText(String.valueOf(cuenta.getUsaldo()));
+    @Override
+    public int getCount() {
+        return list.size();
     }
 
-    @NonNull
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.view_cuentas, viewGroup, false);
-        return new ViewHolder(view);
+    @Override
+    public Object getItem(int i) {
+        return list.get(i);
     }
 
+    @Override
+    public long getItemId(int i) {
+        return 0;
+    }
 
+    @Override
+    public View getView(int i, View view, ViewGroup viewGroup) {
+        View miVista = view;
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
-
-
-        TextView nCuenta,tpCuenta,usaldo;
-
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-
-            nCuenta = itemView.findViewById(R.id.ncuenta);
-            tpCuenta = itemView.findViewById(R.id.tpCuenta);
-            usaldo = itemView.findViewById(R.id.usaldo);
+        if (view == null) {
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            miVista = inflater.inflate(R.layout.view_cuentas, viewGroup, false);
         }
 
+        TextView item_models_list_nombres = miVista.findViewById(R.id.item_contacto_list_nombres);
+        cuenta model = (cuenta) getItem(i);
+
+        int datosCuenta;
+            if (model.getTpCuenta().isEmpty()) {
+                datosCuenta = model.getnCuenta();
+            } else {
+                datosCuenta = model.getUsaldo();
+            }
+        item_models_list_nombres.setText(datosCuenta);
+
+
+        return miVista;
     }
 }
