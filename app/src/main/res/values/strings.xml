@@ -7,4 +7,8 @@
     <string name="title_activity_register">Register</string>
     <string name="title_activity_datos_banco">datosBanco</string>
     <string name="title_activity_mostrar_datos">MostrarDatos</string>
+    <string name="detalle_nCuenta"># CUENTA: </string>
+    <string name="detalle_tpCuenta">TIPO DE CUENTA: </string>
+    <string name="detalle_usaldo">SALDO: </string>
+
 </resources>

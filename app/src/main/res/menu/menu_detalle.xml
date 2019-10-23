@@ -1,0 +1,19 @@
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.listadecontactos.MainActivity">
+
+    <item
+        android:id="@+id/action_detalle_editar"
+        android:orderInCategory="100"
+        android:title="Editar"
+        android:icon="@drawable/ic_baseline_edit_45px"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_detalle_salir"
+        android:orderInCategory="100"
+        android:title="Salir"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_baseline_exit_to_app_45px"/>
+</menu>

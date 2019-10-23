@@ -1,6 +1,8 @@
 package com.example.myapplication;
 
-public class cuenta {
+import java.io.Serializable;
+
+public class cuenta<nCuenta> implements Serializable {
 
     private int nCuenta,usaldo;
     private String tpCuenta;
@@ -17,10 +19,6 @@ public class cuenta {
 
     public int getnCuenta() {
         return nCuenta;
-    }
-
-    public void setnCuenta(int nCuenta) {
-        this.nCuenta = nCuenta;
     }
 
     public int getUsaldo() {
